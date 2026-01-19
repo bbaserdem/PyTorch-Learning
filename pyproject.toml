@@ -73,6 +73,12 @@ select = [
     "B",   # flake8-bugbear
     "UP",  # pyupgrade
 ]
+ignore = [
+    "F401",  # unused imports (useful during development)
+]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = false  # preserve multiline formatting when trailing comma is present
 
 [tool.ty]
 src = ["src"]
