@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyro-learning"
+version = "0.1.0"
+description = "Pyro probabilistic programming learning workspace"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    # Pyro requires PyTorch
+    "torch>=2.2.0",
+    
+    # Pyro PPL
+    "pyro-ppl>=1.9.0",
+    
+    # CLI interface
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+pyro-learn = "pyro_learning.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pyro_learning"]

@@ -1,19 +1,14 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
-name = "pytorch-learning"
+name = "ml-learning"
 version = "0.1.0"
-description = "PyTorch learning repository"
+description = "Multi-framework machine learning practice repository"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 dependencies = [
-    # PyTorch (CPU-only, suitable for macOS)
-    "torch>=2.2.0",
-    "torchvision>=0.17.0",
-    "torchaudio>=2.2.0",
+    # Workspace packages
+    "pytorch-learning",
+    "pyro-learning",
     
     # Data manipulation & scientific computing
     "numpy>=1.26.0",
@@ -30,23 +25,12 @@ dependencies = [
     "ipykernel>=6.29.0",
     "ipywidgets>=8.1.0",
     
-    # Machine learning utilities
-    "scikit-learn>=1.4.0",
+    # CLI tooling
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    
+    # Utilities
     "tqdm>=4.66.0",
-    
-    # Image processing
-    "pillow>=10.2.0",
-    
-    # Experiment tracking & logging
-    "tensorboard>=2.15.0",
-]
-
-[project.optional-dependencies]
-dev = [
-    "ruff>=0.2.0",
-    "ty",
-    "pytest>=8.0.0",
-    "pytest-cov>=4.1.0",
 ]
 
 [dependency-groups]
@@ -57,8 +41,12 @@ dev = [
     "pytest-cov>=4.1.0",
 ]
 
-[tool.hatch.build.targets.wheel]
-packages = ["src/pytorch_learning"]
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+pytorch-learning = { workspace = true }
+pyro-learning = { workspace = true }
 
 [tool.ruff]
 line-length = 100
@@ -78,13 +66,13 @@ ignore = [
 ]
 
 [tool.ruff.format]
-skip-magic-trailing-comma = false  # preserve multiline formatting when trailing comma is present
+skip-magic-trailing-comma = false
 
 [tool.ty]
-src = ["src"]
+src = ["packages/*/src"]
 python-version = "3.11"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["packages/*/tests"]
 python_files = ["test_*.py", "*_test.py"]
 addopts = "-v --tb=short"
